@@ -3,7 +3,6 @@ import {onTextArea} from "./functions-for-form.js"
 
 const form = document.querySelector(".feedback-form");
 const input = document.querySelector("input");
-const submit = document.querySelector("button");
 const textArea = document.querySelector("textarea");
 
 
@@ -21,3 +20,5 @@ form.addEventListener("submit", ({target}) => {
       form.reset();
   }
 })
+
+
