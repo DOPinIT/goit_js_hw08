@@ -1,6 +1,6 @@
 import { onInput } from "./functions-for-form.js"
 import {onTextArea} from "./functions-for-form.js"
-
+// selectors
 const form = document.querySelector(".feedback-form");
 const input = document.querySelector("input");
 const textArea = document.querySelector("textarea");
