@@ -1,24 +1,38 @@
-import { onInput } from "./functions-for-form.js"
-import {onTextArea} from "./functions-for-form.js"
-// selectors
-const form = document.querySelector(".feedback-form");
-const input = document.querySelector("input");
-const textArea = document.querySelector("textarea");
+var throttle = require('lodash.throttle');
 
+const form = document.querySelector('.feedback-form');
+const email = document.querySelector('[type="email"]');
+const textarea = document.querySelector('textarea');
 
-input.addEventListener("input", onInput)
+const savedInput = 'feedback-form-state';
 
-textArea.addEventListener("input", onTextArea)
+form.addEventListener('input', throttle(onInput, 500));
+form.addEventListener('submit', onFormSubmit);
 
-form.addEventListener("submit", ({target}) => {
-  event.preventDefault();
-  const { elements: { email, message } } = target;
-  if (email.value === "" || message.value === "") {
-      alert("Всі поля повинні бути заповнені!");
-  } else {
-      console.log({ "email": email.value, "message": message.value });
-      form.reset();
+onDataInInput();
+
+function onInput() {
+  const inputObj = {
+    email: form.email.value,
+    message: form.message.value,
+  };
+
+  localStorage.setItem(savedInput, JSON.stringify(inputObj));
+}
+
+function onFormSubmit(e) {
+  e.preventDefault();
+
+  console.log(JSON.parse(localStorage.getItem(savedInput)));
+
+  e.target.reset();
+  localStorage.removeItem(savedInput);
+}
+
+function onDataInInput() {
+  const objOfSavedData = JSON.parse(localStorage.getItem(savedInput));
+  if (objOfSavedData) {
+    email.value = objOfSavedData.email;
+    textarea.value = objOfSavedData.message;
   }
-})
-
-
+}
