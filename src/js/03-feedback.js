@@ -16,23 +16,24 @@ function onInput() {
     email: form.email.value,
     message: form.message.value,
   };
-
   localStorage.setItem(savedInput, JSON.stringify(inputObj));
 }
 
 function onFormSubmit(e) {
   e.preventDefault();
-
-  console.log(JSON.parse(localStorage.getItem(savedInput)));
+  const { elements: { email, message } } = e.currentTarget;
+  if (email.value === "" || message.value === "") {
+      alert("all fields must be filled");}
+      console.log(JSON.parse(localStorage.getItem(savedInput)));
 
   e.target.reset();
   localStorage.removeItem(savedInput);
 }
 
 function onDataInInput() {
-  const objOfSavedData = JSON.parse(localStorage.getItem(savedInput));
-  if (objOfSavedData) {
-    email.value = objOfSavedData.email;
-    textarea.value = objOfSavedData.message;
+  const savedData = JSON.parse(localStorage.getItem(savedInput));
+ if (savedData) {
+    email.value = savedData.email;
+    textarea.value = savedData.message;
   }
 }
